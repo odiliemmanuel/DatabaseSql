@@ -4,12 +4,143 @@ USE mdc_ch02;
 -- SELECT * FROM INVOICE;
 -- SELECT * FROM INVOICE_ITEM;
 
-
 -- B:
 -- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER;
 
- 
 -- C:
 -- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER WHERE FIRSTNAME = "Nikki"; 
 
 -- D:
+-- SELECT DATEIN, DATEOUT, LASTNAME, FIRSTNAME, PHONE FROM INVOICE , CUSTOMER WHERE TOTALAMOUNT >= 100;
+
+-- E:
+-- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER WHERE FIRSTNAME LIKE "B%";
+
+-- F:
+-- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER WHERE LASTNAME LIKE "%cat%"
+
+-- F:
+-- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER WHERE LASTNAME LIKE "%cat%"
+
+-- G:
+-- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER WHERE PHONE LIKE "_23%"
+
+-- H:
+-- SELECT MAX(TotalAmount), MIN(TotalAmount) FROM INVOICE;
+
+-- I:
+-- SELECT AVG(TotalAmount)  FROM INVOICE;
+
+-- J:
+-- SELECT COUNT("*") FROM CUSTOMER;
+
+-- K:
+-- SELECT FIRSTNAME, LASTNAME   FROM CUSTOMER
+-- group by FIRSTNAME, LASTNAME;
+
+-- L:
+-- SELECT FIRSTNAME, LASTNAME, COUNT("*") AS TOTALCUSTOMERS
+-- FROM CUSTOMER
+-- GROUP BY  FIRSTNAME, LASTNAME
+
+-- M:
+-- SELECT FIRSTNAME, LASTNAME, PHONE FROM CUSTOMER
+-- WHERE CUSTOMERID IN(
+-- 	SELECT CustomerID
+   --  FROM INVOICE
+    -- WHERE TotalAmount > 100
+-- )
+-- ORDER BY LASTNAME ASC, FIRSTNAME DESC;
+
+-- N:
+-- SELECT c.LASTNAME, c.FIRSTNAME, c.PHONE
+-- FROM CUSTOMER c, INVOICE i
+-- WHERE c.CUSTOMERID = i.CUSTOMERID
+--   AND i.TotalAmount > 100
+-- ORDER BY c.LASTNAME ASC, c.FIRSTNAME DESC;
+
+
+-- O:
+-- SELECT c.LASTNAME, c.FIRSTNAME, c.PHONE
+-- FROM CUSTOMER c
+-- JOIN INVOICE i
+	-- ON c.CUSTOMERID = i.CUSTOMERID
+-- WHERE i.TotalAmount > 100 
+
+-- ORDER BY c.LASTNAME ASC, c.FIRSTNAME DESC;
+
+
+
+-- P:
+-- SELECT LASTNAME, FIRSTNAME, PHONE
+-- FROM CUSTOMER 
+-- WHERE CUSTOMERID IN(
+	-- SELECT CustomerID
+    -- FROM INVOICE_ITEM
+    -- WHERE Item LIKE "%Dress Shirt%"
+--  ) 
+-- ORDER BY LASTNAME ASC, FIRSTNAME DESC;																																											
+
+
+-- Q:
+-- SELECT c.LastName, c.FirstName, c.Phone
+-- FROM CUSTOMER c
+-- JOIN INVOICE_ITEM ii
+-- WHERE Item LIKE '%Dress Shirt%'
+-- ORDER BY LASTNAME ASC, FIRSTNAME DESC;
+
+
+-- R:
+-- SELECT c.LASTNAME, c.FIRSTNAME, c.PHONE
+-- FROM CUSTOMER c
+-- JOIN INVOICE i
+
+	-- ON c.CUSTOMERID = i.CUSTOMERID
+-- JOIN INVOICE_ITEM ii
+	-- ON i.InvoiceNumber = ii.InvoiceNumber
+-- WHERE Item LIKE '%Dress Shirt%'
+-- ORDER BY c.LASTNAME ASC, c.FIRSTNAME DESC;
+
+
+-- S:
+-- SELECT 
+   --  c.LastName AS CustomerLastName,
+    -- c.FirstName AS CustomerFirstName,
+    -- r.LastName AS ReferredByLastName,
+    -- r.FirstName AS ReferredByFirstName
+-- FROM CUSTOMER c
+-- LEFT JOIN 	CUSTOMER r
+   --  ON c.ReferredBy = r.CustomerID;
+
+
+-- T:
+-- SELECT c.LastName, c.FirstName, c.Phone
+-- FROM CUSTOMER c
+-- JOIN INVOICE i 
+--     ON c.CustomerID = i.CustomerID
+-- WHERE i.InvoiceNumber IN (
+--     SELECT ii.InvoiceNumber
+--     FROM INVOICE_ITEM ii
+--     WHERE ii.Item = 'Dress Shirt'
+-- )
+-- ORDER BY c.LastName ASC, c.FirstName DESC;
+
+-- U:
+SELECT c.LASTNAME, c.FIRSTNAME, c.PHONE, i.TotalAmount
+FROM CUSTOMER c
+LEFT JOIN INVOICE i 
+    ON c.CustomerID = i.CustomerID
+LEFT JOIN INVOICE_ITEM ii 
+    ON i.InvoiceNumber = ii.InvoiceNumber
+       AND ii.Item = 'Dress Shirt'
+ORDER BY 
+    i.TotalAmount ASC,
+    c.LastName ASC,
+    c.FirstName DESC;
+
+    
+    
+    
+    
+    
+
